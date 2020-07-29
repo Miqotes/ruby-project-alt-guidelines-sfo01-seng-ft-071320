@@ -1,3 +1,6 @@
 require_relative '../config/environment'
+ActiveRecord::Base.logger.level = 1 
+cli = CommandLineInterface.new
+cli.greet
 
-puts "hello world"
+cli.enter_store_name
