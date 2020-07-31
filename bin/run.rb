@@ -6,4 +6,7 @@ require "tty-prompt"
 prompt = TTY::Prompt.new
 cli = CommandLineInterface.new
 cli.greet
-cli.next_choice 
+
+while true
+  cli.next_choice 
+end

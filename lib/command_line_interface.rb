@@ -41,10 +41,10 @@ puts'      ██████╗  █████╗ ██╗    ██╗█�
     store_name = prompt.ask('Enter store name:').colorize(:red)
     # puts 'Enter store name:'
     # store_name = gets.chomp
-    cat_name = prompt.ask('Enter user cat name:').colorize(:light_blue)
-    brand_name = prompt.ask('Enter brand name:').colorize(:light_blue)
-    rating_num = prompt.ask('Enter rating').colorize(:light_blue)
-    review_text = prompt.ask('Enter your review:').colorize(:light_blue).underline
+    cat_name = prompt.ask('Enter user cat name:'.colorize(:light_blue))
+    brand_name = prompt.ask('Enter brand name:'.colorize(:light_blue))
+    rating_num = prompt.ask('Enter rating'.colorize(:light_blue))
+    review_text = prompt.ask('Enter your review:'.colorize(:light_blue).underline)
     # lc_review = CatFoodReview.create(
     # review: Faker::Coffee.unique.notes
     entered_review = CatFoodReview.create(review: review_text, rating: rating_num, brand_name: brand_name)
@@ -80,6 +80,7 @@ puts'      ██████╗  █████╗ ██╗    ██╗█�
   end
 
   def update_review
+    #binding.pry
     puts 'Enter user cat name:'.colorize(:light_green)
     cat_name = gets.chomp
     cat_user = Cat.find_by(name: cat_name)
@@ -101,9 +102,9 @@ puts'      ██████╗  █████╗ ██╗    ██╗█�
     cat_name = gets.chomp
     cat_user = Cat.find_by(name: cat_name)
     reviews = cat_user.cat_food_reviews
-    puts 'Enter review number to delete:'.colorize(:yellow)
+    puts 'Out of all of your reviews, which number should be deleted?:'.colorize(:yellow)
     delete_review = gets.chomp.to_i
-    review = reviews[delete_review - 1]
+    review = reviews.last
     review.destroy
   end
 
