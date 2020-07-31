@@ -1,14 +1,24 @@
-require "tty-prompt"
+require 'tty-prompt'
+# require 'colorize'
+# require 'colorized_string'
 prompt = TTY::Prompt.new
 class CommandLineInterface
   def greet
-    puts "Meow! Welcome to Cattiviews! Read only the finest catfood reviews here. 
+
+puts'      ██████╗  █████╗ ██╗    ██╗███████╗      ██╗   ██╗██████╗ 
+     ██╔══██╗██╔══██╗██║    ██║██╔════╝      ██║   ██║██╔══██╗
+     ██████╔╝███████║██║ █╗ ██║███████╗█████╗██║   ██║██████╔╝
+     ██╔═══╝ ██╔══██║██║███╗██║╚════██║╚════╝██║   ██║██╔═══╝ 
+     ██║     ██║  ██║╚███╔███╔╝███████║      ╚██████╔╝██║     
+     ╚═╝     ╚═╝  ╚═╝ ╚══╝╚══╝ ╚══════╝       ╚═════╝ ╚═╝
+      '
+
+    puts "Meow! Welcome to Paws-Up! Read only the finest catfood reviews here. 
     We welcome your contributions meow!"
   end
 
   def get_review
     #Chonk should be able to read reviews of the catfood store he is going to.
-
     puts 'Is your food getting stale and boring? Why not read reviews for your catfood destination? What store are you heading to today?'
 
     store_name = gets.chomp
@@ -63,6 +73,10 @@ class CommandLineInterface
     if prompt.yes?('Would you like to delete a review? Y/N')
       return delete_review
     end
+
+    if prompt.yes?('Would you like to read all available reviews for every store? Y/N')
+      return all_reviews
+    end
   end
 
   def update_review
@@ -91,5 +105,16 @@ class CommandLineInterface
     delete_review = gets.chomp.to_i
     review = reviews[delete_review - 1]
     review.destroy
+  end
+
+  def all_reviews
+    CatFoodReview.all.each do |review|
+      puts "store name: #{review.pet_food_store.name}"
+      puts "usercat: #{review.cat.name}"
+      puts "brand: #{review.brand_name}"
+      puts "rating: #{review.rating}"
+      puts "review: #{review.review}"
+      puts ''
+    end
   end
 end
