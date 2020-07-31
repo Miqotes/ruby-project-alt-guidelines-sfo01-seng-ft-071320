@@ -1,12 +1,7 @@
 require_relative '../config/environment'
 ActiveRecord::Base.logger.level = 1 
+require "tty-prompt"
+prompt = TTY::Prompt.new
 cli = CommandLineInterface.new
 cli.greet
-
-cli.enter_store_name
-
-cli.create_review
-
-cli.update_review
-
-cli.delete_review
+cli.next_choice

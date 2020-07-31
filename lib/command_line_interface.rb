@@ -1,11 +1,12 @@
+require "tty-prompt"
+prompt = TTY::Prompt.new
 class CommandLineInterface
-
   def greet
     puts "Meow! Welcome to Cattiviews! Read only the finest catfood reviews here. 
     We welcome your contributions meow!"
   end
 
-  def enter_store_name
+  def get_review
     #Chonk should be able to read reviews of the catfood store he is going to.
 
     puts 'Is your food getting stale and boring? Why not read reviews for your catfood destination? What store are you heading to today?'
@@ -26,19 +27,16 @@ class CommandLineInterface
   end
 
   def create_review
-    puts 'Enter store name:'
-    store_name = gets.chomp
-    puts 'Enter user cat name:'
-    cat_name = gets.chomp
-    puts 'Enter brand name:'
-    brand_name = gets.chomp
-    puts 'Enter rating:'
-    rating_num = gets.chomp.to_i
-    puts 'Enter your review:'
-    review_text = gets.chomp 
-    
-    #lc_review = CatFoodReview.create(
-    #review: Faker::Coffee.unique.notes
+    prompt = TTY::Prompt.new
+    store_name = prompt.ask('Enter store name:')
+    # puts 'Enter store name:'
+    # store_name = gets.chomp
+    cat_name = prompt.ask('Enter user cat name:')
+    brand_name = prompt.ask('Enter brand name:')
+    rating_num = prompt.ask('Enter rating')
+    review_text = prompt.ask('Enter your review:')
+    # lc_review = CatFoodReview.create(
+    # review: Faker::Coffee.unique.notes
     entered_review = CatFoodReview.create(review: review_text, rating: rating_num, brand_name: brand_name)
     cat_user = Cat.find_or_create_by(name: cat_name)
     entered_review.cat = cat_user
@@ -46,6 +44,25 @@ class CommandLineInterface
     entered_review.pet_food_store = store
     entered_review.save
     # CatFoodReview.create({ :review => review_text })
+  end
+
+  def next_choice
+    prompt = TTY::Prompt.new
+    if prompt.yes?('Would you like to create a review? Y/N')
+      return create_review
+    end
+
+    if prompt.yes?('Would you like to read reviews? Y/N')
+      return get_review
+    end
+
+    if prompt.yes?('Would you like to update a review? Y/N')
+      return update_review
+    end
+
+    if prompt.yes?('Would you like to delete a review? Y/N')
+      return delete_review
+    end
   end
 
   def update_review
@@ -75,5 +92,4 @@ class CommandLineInterface
     review = reviews[delete_review - 1]
     review.destroy
   end
-  
 end
