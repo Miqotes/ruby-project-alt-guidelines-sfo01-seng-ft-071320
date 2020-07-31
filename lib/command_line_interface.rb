@@ -85,7 +85,7 @@ puts'      ██████╗  █████╗ ██╗    ██╗█�
     cat_name = gets.chomp
     cat_user = Cat.find_by(name: cat_name)
     reviews = cat_user.cat_food_reviews
-    puts 'Enter review number to change:'.colorize(:light_cyan)
+    puts 'Enter which review number you would like to update:'.colorize(:light_cyan)
     update_review = gets.chomp.to_i
     review = reviews[update_review - 1]
     puts 'Enter your new review:'.colorize(:light_green)
